@@ -16,9 +16,16 @@ namespace MessageBoardApi.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Message>>> Get()
+    public async Task<ActionResult<IEnumerable<Message>>> Get(string group)
     {
-      return await _db.Messages.ToListAsync();
+      IQueryable<Message> query = _db.Messages.AsQueryable();
+
+      if (group != null)
+      {
+        query = query.Where(entry => entry.Group == group);
+      }
+
+      return await query.ToListAsync();
     }
 
     [HttpGet("{id}")]
