@@ -48,5 +48,44 @@ namespace MessageBoardApi.Controllers
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetMessage), new { id = message.MessageId }, message);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, string author, Message message)
+    {
+      if (id != message.MessageId)
+      {
+        return BadRequest();
+      }
+
+      if (author.ToLower() != message.Author.ToLower())
+      {
+        return BadRequest();
+      }
+
+      _db.Messages.Update(message);
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!MessageExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+      return NoContent();
+    }
+
+    private bool MessageExists(int id)
+    {
+      return _db.Messages.Any(entry => entry.MessageId == id);
+    }
+
   }
 }
