@@ -3,6 +3,7 @@ using System;
 using MessageBoardApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MessageBoardApi.Migrations
 {
     [DbContext(typeof(MessageBoardApiContext))]
-    partial class MessageBoardApiContextModelSnapshot : ModelSnapshot
+    [Migration("20240103190212_UpdateDateValues")]
+    partial class UpdateDateValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace MessageBoardApi.Migrations
                         {
                             MessageId = 3,
                             Author = "nightryder82",
-                            Date = new DateTime(2019, 12, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 1, 3, 11, 2, 12, 91, DateTimeKind.Local).AddTicks(8111),
                             Group = "Cycling Enthusiasts",
                             UserMessage = "Looking for rain-resistant tires for my bike"
                         },
@@ -70,7 +72,7 @@ namespace MessageBoardApi.Migrations
                         {
                             MessageId = 4,
                             Author = "muddyB00tz",
-                            Date = new DateTime(1988, 6, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Group = "Hiking fanatics",
                             UserMessage = "Best hiking trails in Cascade mountain range?"
                         },
@@ -78,7 +80,7 @@ namespace MessageBoardApi.Migrations
                         {
                             MessageId = 5,
                             Author = "StampNerd",
-                            Date = new DateTime(2023, 3, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 1, 3, 11, 2, 12, 91, DateTimeKind.Local).AddTicks(8117),
                             Group = "Stamp collectors",
                             UserMessage = "Can someone tell me the year of this stamp?"
                         });
