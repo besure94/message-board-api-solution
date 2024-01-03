@@ -40,5 +40,13 @@ namespace MessageBoardApi.Controllers
 
       return message;
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Message>> Post(Message message)
+    {
+      _db.Messages.Add(message);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetMessage), new { id = message.MessageId }, message);
+    }
   }
 }
