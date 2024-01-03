@@ -87,5 +87,25 @@ namespace MessageBoardApi.Controllers
       return _db.Messages.Any(entry => entry.MessageId == id);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteMessage(int id, string author)
+    {
+      Message message = await _db.Messages.FindAsync(id);
+      if (message == null)
+      {
+        return NotFound();
+      }
+
+      if (author.ToLower() != message.Author.ToLower())
+      {
+        return BadRequest();
+      }
+
+      _db.Messages.Remove(message);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
+    }
+
   }
 }
