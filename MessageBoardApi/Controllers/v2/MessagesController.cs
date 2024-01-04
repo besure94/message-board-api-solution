@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MessageBoardApi.Models;
 
-namespace MessageBoardApi.Controllers
+namespace MessageBoardApi.Controllers.v2
 {
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
+  [ApiVersion("2.0")]
   public class MessagesController : ControllerBase
   {
     private readonly MessageBoardApiContext _db;
