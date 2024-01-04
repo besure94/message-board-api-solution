@@ -35,6 +35,16 @@ namespace MessageBoardApi.Controllers
       return await query.ToListAsync();
     }
 
+    [HttpGet("groupList")]
+    public async Task<ActionResult<List<string>>> GetAllGroups()
+    {
+      IQueryable<Message> query = _db.Messages.AsQueryable();
+
+      List<string> fullGroupList = await query.Select(message => message.Group).Distinct().ToListAsync();
+
+      return fullGroupList;
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Message>> GetMessage(int id)
     {
