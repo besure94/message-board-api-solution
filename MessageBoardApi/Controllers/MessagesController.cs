@@ -16,7 +16,7 @@ namespace MessageBoardApi.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Message>>> Get(string group, DateTime minimumDate, DateTime maximumDate)
+    public async Task<ActionResult<IEnumerable<Message>>> Get(string group, string minimumDate, string maximumDate)
     {
       IQueryable<Message> query = _db.Messages.AsQueryable();
 
@@ -25,9 +25,11 @@ namespace MessageBoardApi.Controllers
         query = query.Where(entry => entry.Group == group);
       }
 
-      if (minimumDate.ToString() != null && maximumDate.ToString() != null)
+      if (minimumDate != null && maximumDate != null)
       {
-        query = query.Where(entry => entry.Date >= minimumDate).Where(entry => entry.Date <= maximumDate);
+        DateTime minDate = DateTime.Parse(minimumDate);
+        DateTime maxDate = DateTime.Parse(maximumDate);
+        query = query.Where(entry => entry.Date >= minDate).Where(entry => entry.Date <= maxDate);
       }
 
       return await query.ToListAsync();
