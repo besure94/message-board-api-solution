@@ -17,7 +17,7 @@ namespace MessageBoardApi.Controllers.v2
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Message>>> Get(string group, string minimumDate, string maximumDate)
+    public async Task<ActionResult<IEnumerable<Message>>> Get(string group, string minimumDate, string maximumDate, int pageNumber)
     {
       IQueryable<Message> query = _db.Messages.AsQueryable();
 
@@ -31,6 +31,14 @@ namespace MessageBoardApi.Controllers.v2
         DateTime minDate = DateTime.Parse(minimumDate);
         DateTime maxDate = DateTime.Parse(maximumDate);
         query = query.Where(entry => entry.Date >= minDate).Where(entry => entry.Date <= maxDate);
+      }
+
+      if (pageNumber > 0)
+      {
+        int pageSize = 5;
+        List<Message> paginatedQueryMessages = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+        return paginatedQueryMessages;
       }
 
       return await query.ToListAsync();
